@@ -10,6 +10,7 @@ class ViewController: UIViewController {
 //MARK: - properties
     private let viewModel: ViewModelProtocol = ViewModel()
     private var viewCell = "viewCell"
+    
 //MARK: - scrollkView
     private var scrollkView: UIScrollView = {
         let scrollkView = UIScrollView()
@@ -46,7 +47,10 @@ class ViewController: UIViewController {
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
-        layout.sectionInset = .init(top: 10, left: 10, bottom: 10, right: 10)
+        layout.sectionInset = .init(top: 10,
+                                    left: 10,
+                                    bottom: 10,
+                                    right: 10)
         return layout
     }()
     private lazy var collectionView: UICollectionView = {
@@ -81,11 +85,21 @@ class ViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
+    private var skillLabel: UILabel = {
+       let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 13,
+                                 weight: .regular)
+        label.text = "iOS - Разработчик"
+        label.numberOfLines = 0
+        return label
+    }()
     private var titleLabel: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.text = "Бла Бла Бла Бла Бла Бла Бла Бла."
+        label.text = "Опыт разработки 1 год. г. Москва"
         label.font = .systemFont(ofSize: 11,
                                  weight: .semibold)
         label.textColor = .gray
@@ -118,8 +132,8 @@ class ViewController: UIViewController {
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 11,
                                  weight: .semibold)
-        label.text = "Бла Бла Бла Бла Бла Бла Бла Бла Бла Бла Бла Бла Бла Бла"
-        label.numberOfLines = 2
+        label.text = "В свободное от работы время люблю проводить время с семьей, друзьям. Люблю активный отдых и путешествия. Хожу в спортивный зал."
+        label.numberOfLines = 0
         label.textAlignment = .left
         label.textColor = .gray
         return label
@@ -132,10 +146,6 @@ class ViewController: UIViewController {
         button.setBackgroundImage(UIImage(systemName: "plus.square"), for: .normal)
         return button
     }()
-    private var settingButton: UIBarButtonItem = {
-       let button = UIBarButtonItem()
-        return button
-    }()
 //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,13 +155,26 @@ class ViewController: UIViewController {
         viewModel.updateView = { [ weak self ] in
             self?.collectionView.reloadData()
         }
+        setupeViews()
         setupscrollkView()
         cetupeContentView()
         setupeImage()
         setupelabel()
         setupeButton()
         setupecollectionView()
-        setupeBarButtonItem()
+    }
+//MARK: - setupeViews
+    private func setupeViews() {
+        firstView.addSubview(imageView)
+        firstView.addSubview(nameLabel)
+        firstView.addSubview(skillLabel)
+        firstView.addSubview(titleLabel)
+        firstView.addSubview(secondView)
+        secondView.addSubview(infoLabel)
+        secondView.addSubview(addSkillsButton)
+        secondView.addSubview(aboutLabel)
+        secondView.addSubview(aboutInfoLabel)
+        secondView.addSubview(collectionView)
     }
 //MARK: - setupscrollkView
     private func setupscrollkView() {
@@ -165,16 +188,6 @@ class ViewController: UIViewController {
     }
 //MARK: - cetupecontentView
     private func cetupeContentView() {
-        firstView.addSubview(imageView)
-        firstView.addSubview(nameLabel)
-        firstView.addSubview(titleLabel)
-        firstView.addSubview(secondView)
-        secondView.addSubview(infoLabel)
-        secondView.addSubview(addSkillsButton)
-        secondView.addSubview(aboutLabel)
-        secondView.addSubview(aboutInfoLabel)
-        secondView.addSubview(collectionView)
-        
         NSLayoutConstraint.activate([
             firstView.topAnchor.constraint(equalTo: scrollkView.topAnchor),
             firstView.leadingAnchor.constraint(equalTo: scrollkView.leadingAnchor),
@@ -209,6 +222,7 @@ class ViewController: UIViewController {
 //MARK: - setupelabel
     private func setupelabel() {
         NSLayoutConstraint.activate([
+//MARK: - nameLabel
             nameLabel.topAnchor.constraint(equalTo: firstView.topAnchor,
                                             constant: 180),
             nameLabel.centerXAnchor.constraint(equalTo: firstView.centerXAnchor),
@@ -216,9 +230,17 @@ class ViewController: UIViewController {
                                                        constant: 100),
             nameLabel.trailingAnchor.constraint(equalTo: firstView.trailingAnchor,
                                                         constant: -100),
+//MARK: - skillLabel
+            skillLabel.topAnchor.constraint(equalTo: firstView.topAnchor,
+                                            constant: 220),
+            skillLabel.centerXAnchor.constraint(equalTo: firstView.centerXAnchor),
+            skillLabel.leadingAnchor.constraint(equalTo: firstView.leadingAnchor,
+                                                       constant: 100),
+            skillLabel.trailingAnchor.constraint(equalTo: firstView.trailingAnchor,
+                                                        constant: -100),
 //MARK: - titleLabel
             titleLabel.topAnchor.constraint(equalTo: firstView.topAnchor,
-                                            constant: 260),
+                                            constant: 250),
             titleLabel.centerXAnchor.constraint(equalTo: firstView.centerXAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: firstView.leadingAnchor,
                                                        constant: 100),
@@ -233,15 +255,14 @@ class ViewController: UIViewController {
             aboutLabel.leadingAnchor.constraint(equalTo: secondView.leadingAnchor,
                                                 constant: 10),
             aboutLabel.bottomAnchor.constraint(equalTo: secondView.bottomAnchor,
-                                               constant: -40),
+                                               constant: -80),
 //MARK: - aboutInfoLabel
             aboutInfoLabel.topAnchor.constraint(equalTo: aboutLabel.topAnchor,
-                                                constant: 10),
-            aboutInfoLabel.centerXAnchor.constraint(equalTo: secondView.centerXAnchor),
+                                                constant: -20),
             aboutInfoLabel.leadingAnchor.constraint(equalTo: secondView.leadingAnchor,
                                                     constant: 10),
             aboutInfoLabel.trailingAnchor.constraint(equalTo: secondView.trailingAnchor,
-                                                     constant: -5),
+                                                     constant: -10),
             aboutInfoLabel.bottomAnchor.constraint(equalTo: secondView.bottomAnchor,
                                                    constant: -5)
         ])
@@ -254,7 +275,8 @@ class ViewController: UIViewController {
         addSkillsButton.leadingAnchor.constraint(equalTo: secondView.leadingAnchor,
                                                  constant: 310),
         ])
-        addSkillsButton.addTarget(self, action: #selector(addSkills),
+        addSkillsButton.addTarget(self,
+                                  action: #selector(addSkills),
                                   for: .touchUpInside)
     }
 //MARK: - setupecollectionView
@@ -267,108 +289,30 @@ class ViewController: UIViewController {
             self.collectionView.trailingAnchor.constraint(equalTo: secondView.safeAreaLayoutGuide.trailingAnchor,
                                                           constant: -10),
             self.collectionView.bottomAnchor.constraint(equalTo: secondView.safeAreaLayoutGuide.bottomAnchor,
-                                                        constant: -60)
+                                                        constant: -100)
         ])
         collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.register(ViewCollectionCell.self,
                                 forCellWithReuseIdentifier: viewCell)
-    }   
-//MARK: - setupeBarButtonItem
-    private func setupeBarButtonItem(){
-        settingButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"),
-                                                          style: .plain,
-                                                          target: self,
-                                                          action: #selector(setting))
-        settingButton.tintColor = .black
-        navigationItem.rightBarButtonItem = settingButton
     }
-//MARK: - setupeGestures
-    private func setupeGestures() {
-        let tapGestures =  UITapGestureRecognizer(target: self,
-                                                  action: #selector(setting))
-        tapGestures.numberOfTapsRequired = 1
-        settingButton.customView?.addGestureRecognizer(tapGestures)
-    }
-//MARK: - setting profile button
-    @objc func setting() {
-        let popVC = TableViewController()
-        popVC.modalPresentationStyle = .popover
-        let popoverVC = popVC.popoverPresentationController
-        popoverVC?.delegate = self
-        popoverVC?.sourceItem = self.settingButton
-        popoverVC?.sourceRect = CGRect(x: settingButton.customView?.bounds.midX ?? 0,
-                                       y: CGFloat(settingButton.customView?.bounds.midY ?? 0),
-                                       width: CGFloat(0),
-                                       height: CGFloat(0))
-        popVC.preferredContentSize = CGSize(width: 250,
-                                            height: 250)
-        self.present(popVC,
-                     animated: true)
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//MARK: - setupeButtonCell
-    func setupeButtonCell() -> UIButton {
-        let cellButton = UIButton()
-        cellButton.translatesAutoresizingMaskIntoConstraints = false
-        cellButton.addTarget(self,
-                                action: #selector(removeSkillCell),
-                                for: .touchUpInside)
-        cellButton.setBackgroundImage(UIImage(systemName: "x.circle"), for: .normal)
-        cellButton.tintColor = .red
-        return cellButton
-    }
-//MARK: - removeCellSkill
-        @objc func removeSkillCell(_ sender: UIButton) {
-            viewModel.removeSkill(Index: sender.tag)
-        }
 //MARK: - button addSkills
-    @objc private func addSkills(_ sender: UIButton) {
-//        isHiddenButtonCell(sender)
+    @objc private func addSkills(sender: UIButton) {
         if addSkillsButton.currentBackgroundImage == UIImage(systemName: "plus.square") {
             addSkillsButton.setBackgroundImage(UIImage(systemName: "checkmark.circle.fill"),
                                                for: .normal)
             let alert = viewModel.addNewSkills()
                 navigationController?.present(alert,
                                            animated: true)
-            infoLabel.text = "Редактирование навыков:"
+            infoLabel.text = "Редактирование"
+            viewModel.isHidde = false
         } else {
             addSkillsButton.setBackgroundImage(UIImage(systemName: "plus.square"),
                                                for: .normal)
+            viewModel.isHidde = true
             infoLabel.text = "Мои навыки:"
             collectionView.reloadData()
         }
     }
-    
-
-//    func isHiddenButtonCell(_ sender: UIButton) {
-//        sender.tag += 1
-//        switch sender.tag {
-//        case 1 : if sender.tag == 1 {
-//            SaveValue.isHidden = false
-//            print(sender.tag)
-//        }
-//        case 2 : if sender.tag == 2 {
-//            SaveValue.isHidden = true
-////            sender.tag = 0
-//            print(sender.tag)
-//        }
-//        default:
-////            break
-//            sender.tag = 0
-//        }
-//    }
-
-    
-    
 }
 //MARK: - CollectionViewDataSource
 extension ViewController: UICollectionViewDataSource {
@@ -380,25 +324,15 @@ extension ViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: viewCell,
                                                       for: indexPath) as! ViewCollectionCell
-        let buttonCell = setupeButtonCell()
-        cell.skillsView.addSubview(buttonCell)
-        buttonCell.isHidden = SaveValue.isHidden
+        cell.removeButton.tag = indexPath.item
+        cell.viewModel = viewModel
         viewModel.titleForRow(indexPath,
                               cell)
+        if viewModel.isHidde == true {
+            cell.removeButton.isHidden = true
+        } else {
+            cell.removeButton.isHidden = false
+        }
         return cell
-    }
-}
-//MARK: - CollectionViewDelegate
-extension ViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let infoSkill = viewModel.infoSkill(at: indexPath)
-//            navigationController?.present(infoSkill,
-//                                       animated: true)
-    }
-}
-//MARK: - PopoverPresentationControllerDelegate
-extension ViewController: UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
     }
 }

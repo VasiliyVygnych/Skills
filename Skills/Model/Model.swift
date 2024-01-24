@@ -1,4 +1,4 @@
-Mo//
+//
 //  Model.swift
 //  Skills
 //
@@ -20,8 +20,8 @@ struct MySkill {
 
 
 
-enum SaveValue {
-    static let mySkills = "mySkills"
-    static let saveSection = "saveSection"
-    static var isHidden = false
-}
+//enum SaveValue {
+//    static let mySkills = "mySkills"
+//    static let saveSection = "saveSection"
+//    static var isHidden = false
+//}
